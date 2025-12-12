@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Signup | Golden Hour</title>
+
+    
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #dff7ef;
+        }
+
+        
+        .navbar {
+            background: #0e9c66;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+        .navbar ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+        }
+        .navbar ul li a.active {
+            text-decoration: underline;
+        }
+
+        
+        .login-box {
+            width: 380px;
+            margin: 70px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 0px 10px #b9b9b9;
+        }
+
+        .login-box h2 {
+            text-align: center;
+            color: #0e9c66;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border: 1px solid #999;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: #0e9c66;
+            color: white;
+            font-size: 16px;
+            margin-top: 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+
+        .submit-btn:hover {
+            background: #0b7e52;
+        }
+
+        .error {
+            color: red;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+   
+    <div class="navbar">
+        <div class="logo">Golden Hour</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="guides.html">Emergency Guides</a></li>
+            <li><a href="stories.html">Stories & Resources</a></li>
+            <li><a class="active" href="login.html">Login</a></li>
+        </ul>
+    </div>
+
+   
+    <div class="login-box">
+        <h2>Login / Signup</h2>
+
+        <form id="loginForm">
+
+            <label for="name">Name</label>
+            <input type="text" id="name">
+            <span class="error" id="nameError"></span>
+
+            <label for="email">Email</label>
+            <input type="email" id="email">
+            <span class="error" id="emailError"></span>
+
+            <label for="password">Password</label>
+            <input type="password" id="password">
+            <span class="error" id="passwordError"></span>
+
+            <label for="age">Age</label>
+            <input type="number" id="age">
+            <span class="error" id="ageError"></span>
+
+            <button type="button" class="submit-btn" onclick="validateForm()">Submit</button>
+        </form>
+    </div>
+
+   
+    <script>
+        function validateForm() {
+            
+            document.getElementById("nameError").textContent = "";
+            document.getElementById("emailError").textContent = "";
+            document.getElementById("passwordError").textContent = "";
+            document.getElementById("ageError").textContent = "";
+
+            let valid = true;
+
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const age = document.getElementById("age").value.trim();
+
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            
+            if (name === "") {
+                document.getElementById("nameError").textContent = "Name is required.";
+                valid = false;
+            }
+
+            if (email === "") {
+                document.getElementById("emailError").textContent = "Email is required.";
+                valid = false;
+            } else if (!emailPattern.test(email)) {
+                document.getElementById("emailError").textContent = "Invalid email format.";
+                valid = false;
+            }
+
+            if (password === "") {
+                document.getElementById("passwordError").textContent = "Password is required.";
+                valid = false;
+            } else if (password.length < 6) {
+                document.getElementById("passwordError").textContent = "Password must be at least 6 characters.";
+                valid = false;
+            }
+
+            if (age === "") {
+                document.getElementById("ageError").textContent = "Age is required.";
+                valid = false;
+            } else if (isNaN(age) || age <= 0) {
+                document.getElementById("ageError").textContent = "Enter a valid age.";
+                valid = false;
+            }
+
+            
+            if (valid) {
+                alert("Signup Successful!");
+                window.location.href = "index.html"; 
+            }
+        }
+    </script>
+
+</body>
+</html>

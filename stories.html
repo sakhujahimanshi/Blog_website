@@ -1,0 +1,122 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stories & Resources</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+
+<nav class="navbar">
+    <div class="logo">Golden Hour</div>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="emergency.html">Emergency Guidelines</a></li>
+        <li><a href="stories.html">Stories & Resources</a></li>
+        <li><a href="signup.html">Sign Up</a></li>
+    </ul>
+</nav>
+
+<div class="page-container">
+    <h2>Stories & Resources</h2>
+
+    <h3>Real Experiences</h3>
+    <p>Read how people acted during emergencies and how quick thinking saved lives.</p>
+
+    <div class="story-box">
+        <h4>Rohan – Bike Accident Response</h4>
+        <p>Rohan helped a stranger by calling emergency services and preventing blood loss.</p>
+    </div>
+
+    <div class="story-box">
+        <h4>Simran – Apartment Fire Escape</h4>
+        <p>Simran safely guided her family out by staying low and avoiding smoke.</p>
+    </div>
+
+    <div class="story-box">
+        <h4>Aman – Elderly Fall Case</h4>
+        <p>Aman stabilized his grandmother's fall and avoided moving her neck.</p>
+    </div>
+
+   
+     <div class="comment-section">
+    <h2>Leave a Comment</h2>
+
+    <textarea id="commentInput" placeholder="Write your comment..."></textarea>
+    <button id="submitComment">Post Comment</button>
+
+    <h3>All Comments</h3>
+    <div id="commentsContainer"></div>
+</div>
+<script>
+    
+    document.addEventListener("DOMContentLoaded", loadComments);
+
+    const commentInput = document.getElementById("commentInput");
+    const commentsContainer = document.getElementById("commentsContainer");
+    const submitBtn = document.getElementById("submitComment");
+
+    submitBtn.addEventListener("click", addComment);
+
+    function addComment() {
+        const text = commentInput.value.trim();
+
+        if (text === "") {
+            alert("Comment cannot be empty.");
+            return;
+        }
+
+        
+        const newComment = {
+            id: Date.now(),
+            content: text
+        };
+
+        
+        let comments = JSON.parse(localStorage.getItem("comments")) || [];
+        comments.push(newComment);
+        localStorage.setItem("comments", JSON.stringify(comments));
+
+        
+        displayComment(newComment);
+
+        commentInput.value = ""; 
+    }
+
+    function loadComments() {
+        let comments = JSON.parse(localStorage.getItem("comments")) || [];
+        comments.forEach(comment => displayComment(comment));
+    }
+
+    function displayComment(comment) {
+        const div = document.createElement("div");
+        div.classList.add("comment-box");
+
+        div.innerHTML = `
+            <p>${comment.content}</p>
+            <button class="delete-btn" onclick="deleteComment(${comment.id})">Delete</button>
+        `;
+
+        commentsContainer.appendChild(div);
+    }
+
+    function deleteComment(id) {
+        let comments = JSON.parse(localStorage.getItem("comments")) || [];
+        comments = comments.filter(c => c.id !== id);
+        localStorage.setItem("comments", JSON.stringify(comments));
+
+        commentsContainer.innerHTML = "";
+        loadComments();
+    }
+</script>
+
+    
+        
+    
+
+</div>
+
+</body>
+</html>
